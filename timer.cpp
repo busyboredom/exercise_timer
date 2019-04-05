@@ -10,11 +10,11 @@
 #include <chrono>
 #include <thread>
 
-void visual_alarm(int time){  
+void visual_alarm(int time) {  
   // Creates a fullscreen orange window that lasts for "time" seconds
   XColor color;
   Colormap colormap;
-  char international_orange[] = "#FF4F00";
+  char international_orange[] = "#FF7700";
 
   Display* dis = XOpenDisplay(NULL);
   colormap = DefaultColormap(dis, 0);
@@ -44,19 +44,24 @@ void visual_alarm(int time){
                   SubstructureRedirectMask | SubstructureNotifyMask, &xev);
 
   XFlush(dis);
+
   //Sleep "time" seconds, and then it'll close
   std::this_thread::sleep_for(std::chrono::seconds(time));
+
   XCloseDisplay(dis);
 
 }
 
 int main(){
+
+  //This bit is just so know it's running
+  visual_alarm(1);
+
+
   // Sets off a visual timer every 30 minutes
   while(true){
-    visual_alarm(1); // This is so you can see it working right away, without
-                     // giving up your monitor to it for 5s. 
     std::this_thread::sleep_for(std::chrono::minutes(30));
-    visual_alarm(4);
+    visual_alarm(5);
   }
   return 0;
 }
